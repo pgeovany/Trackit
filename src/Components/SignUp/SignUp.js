@@ -1,28 +1,53 @@
-import logo from "../../assets/images/Logo.svg";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import styled from "styled-components";
+import logo from "../../assets/images/Logo.svg";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function SignUp() {
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [image, setImage] = useState("");
+    const [disableButton, setDisableButton] = useState(false);
+    const navigate = useNavigate();
+
+    function signUser(e) {
+        e.preventDefault();
+        setDisableButton(true);
+        const body = {
+            email,
+            name,
+            image,
+            password
+        }
+        const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", body);
+        request.then(() => navigate("/"));
+        request.catch(({response}) => {
+            setDisableButton(false);
+            alert(response.data.message);
+        });
+    }
+
     return(
         <Container>
             <img src={logo} alt="logo"/>
-            <Form />
+            <form onSubmit={signUser}>
+                <Input required disabled={disableButton} value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="email"/>
+                <Input required disabled={disableButton} value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="senha"/>
+                <Input required disabled={disableButton} value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="nome"/>
+                <Input required disabled={disableButton} value={image} onChange={(e) => setImage(e.target.value)} type="url" placeholder="foto"/>
+                <Button type="submit" disabled={disableButton}>
+                    {disableButton ? <ThreeDots color="white"/> : "Cadastrar"}
+                </Button>     
+            </form>
             <Link to="/">
                 <p>Já tem uma conta? Faça login!</p>
             </Link>
         </Container>
-    );
-}
-
-function Form () {
-    return (
-            <form>
-                <Input required type="email" placeholder="email"/>
-                <Input required type="password" placeholder="senha"/>
-                <Input required type="text" placeholder="nome"/>
-                <Input required type="url" placeholder="foto"/>
-                <Button>Cadastrar</Button>
-            </form>
     );
 }
 
@@ -54,7 +79,8 @@ const Container = styled.div`
 
 const Input = styled.input`
     font-family: "Lexend", sans-serif;
-    background-color: #FFFFFF;
+    background-color: ${props => props.disabled ? "#F2F2F2" : "#FFFFFF"};
+    color: ${props => props.disabled ? "#AFAFAF" : "black"};
     border: 1px solid #D5D5D5;
     border-radius: 5px;
     height: 45px;
@@ -76,6 +102,9 @@ const Button = styled.button`
     text-decoration: none;
     font-size: 20px;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     &:hover {
         cursor: pointer;
     }
