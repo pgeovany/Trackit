@@ -12,7 +12,7 @@ export default function CurrentDay() {
 
 const Container = styled.div`
     padding: 70px 0;
-    background-color: #E5E5E5;
+    background-color: #F2F2F2;
     width: 100%;
     height: 100%;
 `;

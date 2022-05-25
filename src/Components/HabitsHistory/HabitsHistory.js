@@ -15,7 +15,7 @@ const Container = styled.div`
     font-family: "Lexend", sans-serif;
     padding: 100px 0;
     padding-left: 16px;
-    background-color: #E5E5E5;
+    background-color: #F2F2F2;
     width: 100%;
     height: 100%;
 
