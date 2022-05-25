@@ -8,7 +8,9 @@ export default function Habits() {
     const {userInfo} = useContext(UserContext);
     const [habits, setHabits] = useState([]);
     const [click, setClick] = useState(false);
-    console.log(userInfo);
+    const [habitDays, setHabitDays] = useState([]);
+    const days = [{id: 1, name: "D"}, {id: 2, name: "S"}, {id: 3, name: "T"}, 
+        {id: 4, name: "Q"}, {id: 5, name: "Q"}, {id: 6, name: "S"}, {id: 7, name: "S"}];
 
     useEffect(() => {
         const config = {
@@ -18,25 +20,42 @@ export default function Habits() {
         }
         const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
         promise.then(answer => setHabits(answer.data));
-    }, []);
+    }, [userInfo.token]);
+
+    function selectDay(id) {
+        if(habitDays.length !== 0 && habitDays.some(dayID => dayID === id)) {
+            setHabitDays(habitDays.filter(itemID => itemID !== id));
+        } else {
+            setHabitDays([...habitDays, id]);
+        }
+    }
 
     function genHabits () {
         if(habits.length !== 0) {
             <Container>
-                <div>
+                <Header>
                     <h1>Meus hábitos</h1>
                     <button>+</button>
-                </div>
+                </Header>
             </Container>
         }
         return (
             <Container>
-                <div>
+                <Header>
                     <h1>Meus hábitos</h1>
                     <Button onClick={() => setClick(true)}>+</Button>
-                </div>
+                </Header>
                 {click ?
-                    <NewHabit setClick={setClick}/> 
+                    <Form>
+                        <Input type="text" placeholder="nome do hábito"></Input>
+                        <Days>
+                            {days.map(day => <Day selectedDays={habitDays} selectDay={selectDay} key={day.id} id={day.id} name={day.name} />)}
+                        </Days>
+                        <Buttons>
+                            <h2 onClick={() => setClick(false)}>Cancelar</h2>
+                            <FormButton disabled={true}>Salvar</FormButton>
+                        </Buttons>
+                    </Form> 
                     : 
                     null
                 }
@@ -53,15 +72,14 @@ export default function Habits() {
     );
 }
 
-function NewHabit({setClick}) {
+function Day({id, name, selectDay, selectedDays}) {
+
+    const isSelected = selectedDays.some(item => item === id);
+
     return (
-        <Form>
-            <Input type="text" placeholder="nome do hábito"></Input>
-            <div>
-                <h2 onClick={() => setClick(false)}>Cancelar</h2>
-                <FormButton disabled={true}>Salvar</FormButton>
-            </div>
-        </Form>
+       <CheckBox onClick={() => selectDay(id)} selected={isSelected}>
+           {name}
+       </CheckBox>
     );
 }
 
@@ -74,19 +92,13 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
 
-    div {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-    }
-
     h1 {
         font-size: 22px;
         color: #126BA5;
     }
 
     p {
+        margin-top: 30px;
         font-size: 18px;
         color: #666666;
     }
@@ -117,13 +129,10 @@ const Form = styled.form`
     display: flex;
     flex-direction: column;
     padding: 18px 18px;
-    margin-bottom: 20px;
+    margin-top: 20px;
     background-color: #ffffff;
     height: 180px;
     border-radius: 5px;
-    div {
-        justify-content: flex-end;
-    }
 
     h2 {
         font-size: 16px;
@@ -145,4 +154,36 @@ const Input = styled.input`
         font-size: 18px;
         color: #DBDBDB;
     }
+`;
+
+const Days = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    padding-bottom: 20px;
+`;
+
+const Header = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+const CheckBox = styled.div`
+    width: 30px;
+    height: 30px;
+    color: ${props => props.selected ? "#FFFFFF" : "#DBDBDB"};
+    background-color: ${props => props.selected ? "#CFCFCF" : "#FFFFFF"};
+    border: 1px solid ${props => props.selected ? "#CFCFCF" : "#D4D4D4"};
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-right: 6px;
+`;
+
+const Buttons = styled.div`
+    justify-content: flex-end;
+    display: flex;
+    align-items: center;
 `;
