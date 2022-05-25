@@ -1,7 +1,18 @@
+import styled from "styled-components";
+
 export default function CurrentDay() {
     return(
         <>
-            CurrentDay component
+            <Container>
+                CurrentDay component
+            </Container>
         </>
     );
 }
+
+const Container = styled.div`
+    padding: 70px 0;
+    background-color: #E5E5E5;
+    width: 100%;
+    height: 100%;
+`;

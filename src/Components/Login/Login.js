@@ -54,7 +54,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     font-family: "Lexend", sans-serif;
-    margin-top: 70px;
+    padding-top: 70px;
     width: 100%;
 
     p, a {
