@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
+import UserContext from "../contexts/UserContext";
 import styled from "styled-components";
 import logo from "../../assets/images/Logo.svg";
 
@@ -10,7 +11,7 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [disableButton, setDisableButton] = useState(false);
-    const [userData, setUserData] = useState([]);
+    const {userInfo, setUserInfo} = useContext(UserContext);
     const navigate = useNavigate();
 
     function logUser(e) {
@@ -22,7 +23,7 @@ export default function Login() {
         }
         const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body);
         request.then(answer => {
-            setUserData(answer.data);
+            setUserInfo(answer.data);
             navigate("/hoje");
         })
         request.catch(({response}) => {
