@@ -8,35 +8,52 @@ export default function CurrentDay() {
     const {userInfo} = useContext(UserContext);
     const [todayHabits, setTodayHabits] = useState([]);
     const [reload, setReload] = useState(false);
-    useEffect(() => {
-        const config = {
-            headers: {
-                Authorization: `Bearer ${userInfo.token}`
-            }
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${userInfo.token}`
         }
+    }
+
+    useEffect(() => {
         const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
         promise.then(answer => {
-            console.log(answer.data);
             setTodayHabits(answer.data);
         })
         .catch(answer => console.log(answer.data.message));
     }, [reload]);
 
     function toggleHabit(id, done) {
-        // const config = {
-        //     headers: {
-        //         Authorization: `Bearer ${userInfo.token}`
-        //     }
-        // }
-        // if(!done) {
-        //     const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, config);
-        //     request.then(answer => {
-        //         console.log(answer);
-        //         setReload(!reload);
-        //     })
-        //     .catch(() => alert("Erro concluir hábito!"));
-        // }
-        return;
+        if(!done) {
+            const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, {}, config);
+            request.then(answer => {
+                setReload(!reload);
+            })
+            .catch(() => alert("Erro ao concluir o hábito!"));
+        } else {
+            const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, {}, config);
+            request.then(answer => {
+                setReload(!reload);
+            })
+            .catch(() => alert("Erro ao desmarcar o hábito!"));
+        }
+    }
+
+    function genHabitList() {
+        return(
+            <HabitsContainer>
+            {todayHabits.map(habit => <Habit 
+                                        key={habit.id}
+                                        name={habit.name}
+                                        id={habit.id}
+                                        done={habit.done}
+                                        currentSequence={habit.currentSequence}
+                                        highestSequence={habit.highestSequence}
+                                        toggleHabit={toggleHabit}
+                                        />)
+            }
+            </HabitsContainer>
+        );
     }
 
     return(
@@ -44,18 +61,7 @@ export default function CurrentDay() {
             <Container>
                 <h1>Dia atual DD/MM</h1>
                 <p>Nenhum hábito concluído ainda</p>
-                <HabitsContainer>
-                    {todayHabits.map(habit => <Habit 
-                                                key={habit.id}
-                                                name={habit.name}
-                                                id={habit.id}
-                                                done={habit.done}
-                                                currentSequence={habit.currentSequence}
-                                                highestSequence={habit.highestSequence}
-                                                toggleHabit={toggleHabit}
-                                                />)
-                    }
-                </HabitsContainer>
+                {genHabitList()}
             </Container>
         </>
     );
