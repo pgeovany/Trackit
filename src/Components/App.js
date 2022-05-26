@@ -9,9 +9,6 @@ import CurrentDay from "../Components/CurrentDay/CurrentDay";
 import HabitsHistory from "../Components/HabitsHistory/HabitsHistory";
 import UserContext from "./contexts/UserContext";
 
-import "../assets/css/reset.css";
-import "../assets/css/style.css";
-
 export default function App() {
 
     const [userInfo, setUserInfo] = useState(null);
