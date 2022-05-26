@@ -113,7 +113,7 @@ export default function Habits() {
             return (
                 <Container>
                     <Header>
-                        <h1 onClick={() => console.log(habits)} >Meus hábitos</h1>
+                        <h1>Meus hábitos</h1>
                         <Button onClick={() => setClick(true)}>+</Button>
                     </Header>
                     {newHabitForm()}

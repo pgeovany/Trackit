@@ -1,6 +1,6 @@
 import { useLocation, Link } from "react-router-dom";
 //import { useContext } from "react";
-//import { buildStyles, CircularProgressbar, CircularProgressbarWithChildren } from "react-circular-progressbar";
+import { buildStyles, CircularProgressbar, CircularProgressbarWithChildren } from "react-circular-progressbar";
 //import UserContext from "../contexts/UserContext";
 import styled from "styled-components";
 
@@ -8,6 +8,7 @@ export default function Footer() {
 
     const location = useLocation().pathname;
     const render = location !== "/" && location !== "/cadastro" ? true : false;
+    const percentage = 70;
 
     function  genFooter() {
         if(render) {
@@ -17,7 +18,21 @@ export default function Footer() {
                         <h1>Hábitos</h1>
                     </Link>
                     <Link to="/hoje">
+                    <ProgressBar>
+                        <CircularProgressbar
+                            value={percentage}
+                            background
+                            backgroundPadding={6}
+                            styles={buildStyles({
+                            strokeLinecap: "round",
+                            backgroundColor: "#52B6FF",
+                            textColor: "#fff",
+                            pathColor: "#fff",
+                            trailColor: "transparent"
+                            })}
+                        />
                         <h1>Hoje</h1>
+                        </ProgressBar>
                     </Link>
                     <Link to="/historico">
                         <h1>Histórico</h1>
@@ -58,5 +73,22 @@ const Container = styled.div`
 
     a {
         text-decoration: none;
+    }
+`;
+
+const ProgressBar = styled.div`
+    font-family: "Lexend", normal;
+    width: 90px;
+    height: 90px;
+    margin-bottom: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    h1 {
+        position: absolute;
+        color: #FFFFFF;
+        font-size: 18px;
     }
 `;
