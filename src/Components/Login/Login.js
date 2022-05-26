@@ -53,7 +53,6 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: "Lexend", sans-serif;
     margin-top: 70px;
     width: 100%;
     background-color: #FFFFFF;
@@ -77,7 +76,6 @@ const Container = styled.div`
 `;
 
 const Input = styled.input`
-    font-family: "Lexend", sans-serif;
     background-color: ${props => props.disabled ? "#F2F2F2" : "#FFFFFF"};
     color: ${props => props.disabled ? "#AFAFAF" : "black"};
     border: 1px solid #D5D5D5;
@@ -93,7 +91,6 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-    font-family: "Lexend", sans-serif;
     height: 42px;
     border: none;
     color: #ffffff;

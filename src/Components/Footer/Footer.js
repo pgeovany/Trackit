@@ -1,6 +1,6 @@
 import { useLocation, Link } from "react-router-dom";
 //import { useContext } from "react";
-import { buildStyles, CircularProgressbar, CircularProgressbarWithChildren } from "react-circular-progressbar";
+import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 //import UserContext from "../contexts/UserContext";
 import styled from "styled-components";
 
@@ -44,17 +44,14 @@ export default function Footer() {
         return null;
     }
 
-    const footer = genFooter();
-
     return(
         <>
-            {footer}
+            {genFooter()}
         </>
     );
 }
 
 const Container = styled.div`
-    font-family: "Lexend", sans-serif;
     position: fixed;
     z-index: 1;
     bottom: 0;
@@ -77,7 +74,6 @@ const Container = styled.div`
 `;
 
 const ProgressBar = styled.div`
-    font-family: "Lexend", normal;
     width: 90px;
     height: 90px;
     margin-bottom: 30%;

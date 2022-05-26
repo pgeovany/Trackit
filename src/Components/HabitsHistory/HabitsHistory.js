@@ -17,7 +17,7 @@ const Container = styled.div`
     padding: 30px 16px;
     background-color: #F2F2F2;
     width: 100%;
-    height: 100%;
+    height: 100vh;
 
     h1 {
         font-size: 22px;

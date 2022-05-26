@@ -60,5 +60,14 @@ export default createGlobalStyle`
     .root {
         height: 100%;
         background-color: #F2F2F2;
+        font-family: "Lexend", sans-serif;
+    }
+
+    input {
+        font-family: "Lexend", sans-serif;
+    }
+
+    button {
+        font-family: "Lexend", sans-serif;
     }
 `;

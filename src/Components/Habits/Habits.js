@@ -200,12 +200,11 @@ const HabitsList = styled.div`
 `;
 
 const Container = styled.div`
-    font-family: "Lexend", normal;
     margin: 70px 0;
     padding: 30px 18px;
     background-color: #F2F2F2;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
 
@@ -222,7 +221,6 @@ const Container = styled.div`
 `;
 
 const Button = styled.button`
-    font-family: "Lexend", normal;
     background-color: ${props => props.disabled ? "#86CCFF" : "#52B6FF"};
     font-size: 26px;
     color: #ffffff;
