@@ -11,7 +11,8 @@ export default function CurrentDay() {
 }
 
 const Container = styled.div`
-    padding: 70px 0;
+    margin: 70px 0;
+    padding: 30px 16px;
     background-color: #F2F2F2;
     width: 100%;
     height: 100%;

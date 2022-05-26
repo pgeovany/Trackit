@@ -201,8 +201,8 @@ const HabitsList = styled.div`
 
 const Container = styled.div`
     font-family: "Lexend", normal;
-    margin-bottom: 70px;
-    padding: 90px 18px;
+    margin: 70px 0;
+    padding: 30px 18px;
     background-color: #F2F2F2;
     width: 100%;
     height: 100%;

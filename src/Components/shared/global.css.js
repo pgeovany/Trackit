@@ -53,11 +53,12 @@ export default createGlobalStyle`
 
 //------MY STYLES--------------------//
 
+
     * {
         box-sizing: border-box;
     }
-
     .root {
-        height: 100vh;
+        height: 100%;
+        background-color: #F2F2F2;
     }
 `;

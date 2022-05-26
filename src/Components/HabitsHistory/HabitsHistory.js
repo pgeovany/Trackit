@@ -13,8 +13,8 @@ export default function HabitsHistory() {
 
 const Container = styled.div`
     font-family: "Lexend", sans-serif;
-    padding: 100px 0;
-    padding-left: 16px;
+    margin: 70px 0;
+    padding: 30px 16px;
     background-color: #F2F2F2;
     width: 100%;
     height: 100%;
