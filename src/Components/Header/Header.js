@@ -32,6 +32,7 @@ export default function Header() {
 
 const Container = styled.div`
     font-family: "Playball", normal;
+    z-index: 1;
     position: fixed;
     top: 0;
     left: 0;

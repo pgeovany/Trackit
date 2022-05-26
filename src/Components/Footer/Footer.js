@@ -41,6 +41,7 @@ export default function Footer() {
 const Container = styled.div`
     font-family: "Lexend", sans-serif;
     position: fixed;
+    z-index: 1;
     bottom: 0;
     left: 0;
     width: 100%;
