@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import UserContext from "../contexts/UserContext";
 import styled from "styled-components";
+import Weekdays from "react-calendar/dist/umd/MonthView/Weekdays";
 
 export default function Habits() {
 
@@ -9,7 +10,9 @@ export default function Habits() {
     const [habits, setHabits] = useState([]);
     const [click, setClick] = useState(false);
     const [habitDays, setHabitDays] = useState([]);
-    const days = [{id: 1, name: "D"}, {id: 2, name: "S"}, {id: 3, name: "T"}, 
+    const [habitName, setHabitName] = useState("");
+
+    const weekDays = [{id: 1, name: "D"}, {id: 2, name: "S"}, {id: 3, name: "T"}, 
         {id: 4, name: "Q"}, {id: 5, name: "Q"}, {id: 6, name: "S"}, {id: 7, name: "S"}];
 
     useEffect(() => {
@@ -30,14 +33,62 @@ export default function Habits() {
         }
     }
 
+    function createHabit(e) {
+        e.preventDefault();
+        if(habitDays.length === 0) {
+            alert("Selecione pelo menos um dia!");
+            return;
+        }
+
+        const body = {
+            name: habitName,
+            days: habitDays
+        }
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config);
+        //request.then(answer => setHabits({...habits}, answer.data));
+        request.then(answer => {
+            setHabits([...habits, answer.data]);
+            console.log(answer.data);
+            setClick(false);
+        });
+        request.catch(answer => {
+            console.log(answer);
+            setClick(false);
+        });
+    }
+
     function genHabits () {
         if(habits.length !== 0) {
-            <Container>
-                <Header>
-                    <h1>Meus hábitos</h1>
-                    <button>+</button>
-                </Header>
-            </Container>
+            return (
+                <Container>
+                    <Header>
+                        <h1 onClick={() => console.log(habits)} >Meus hábitos</h1>
+                        <Button onClick={() => setClick(true)}>+</Button>
+                    </Header>
+                    {click ?
+                        <Form onSubmit={createHabit}>
+                            <Input required type="text" placeholder="nome do hábito" value={habitName} onChange={(e) => setHabitName(e.target.value)}/>
+                            <Days>
+                                {weekDays.map(day => <Day selectedDays={habitDays} selectDay={selectDay} key={day.id} id={day.id} name={day.name} />)}
+                            </Days>
+                            <Buttons>
+                                <h2 onClick={() => setClick(false)}>Cancelar</h2>
+                                <FormButton type="submit">Salvar</FormButton>
+                            </Buttons>
+                        </Form> 
+                        : 
+                        null
+                    }
+                    {habits.map(item => <UserHabit name={item.name} days={item.days} weekDays={weekDays}/>)}
+                </Container>
+            );
         }
         return (
             <Container>
@@ -46,14 +97,14 @@ export default function Habits() {
                     <Button onClick={() => setClick(true)}>+</Button>
                 </Header>
                 {click ?
-                    <Form>
-                        <Input type="text" placeholder="nome do hábito"></Input>
+                    <Form onSubmit={createHabit}>
+                        <Input required type="text" placeholder="nome do hábito" value={habitName} onChange={(e) => setHabitName(e.target.value)}/>
                         <Days>
-                            {days.map(day => <Day selectedDays={habitDays} selectDay={selectDay} key={day.id} id={day.id} name={day.name} />)}
+                            {weekDays.map(day => <Day selectedDays={habitDays} selectDay={selectDay} key={day.id} id={day.id} name={day.name} />)}
                         </Days>
                         <Buttons>
                             <h2 onClick={() => setClick(false)}>Cancelar</h2>
-                            <FormButton disabled={true}>Salvar</FormButton>
+                            <FormButton type="submit">Salvar</FormButton>
                         </Buttons>
                     </Form> 
                     : 
@@ -72,6 +123,28 @@ export default function Habits() {
     );
 }
 
+function UserHabit({name, days, weekDays}) {
+    return (
+        <HabitsList>
+            <h4>{name}</h4>
+            <Days>
+                {weekDays.map(day => <DayHabbit selectedDays={days} key={day.id} id={day.id} name={day.name} />)}
+            </Days>
+        </HabitsList>
+    );
+}
+
+function DayHabbit({id, name, selectedDays}) {
+
+    const isSelected = selectedDays.some(item => item === id);
+
+    return (
+       <CheckBox selected={isSelected}>
+           {name}
+       </CheckBox>
+    );
+}
+
 function Day({id, name, selectDay, selectedDays}) {
 
     const isSelected = selectedDays.some(item => item === id);
@@ -83,8 +156,26 @@ function Day({id, name, selectDay, selectedDays}) {
     );
 }
 
+const HabitsList = styled.div`
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 18px 18px;
+    margin-top: 20px;
+    background-color: #ffffff;
+    height: 90px;
+    border-radius: 5px;
+
+    h4 {
+        font-size: 20px;
+        color: #666666;
+        margin-bottom: 8px;
+    }
+`;
+
 const Container = styled.div`
     font-family: "Lexend", normal;
+    margin-bottom: 70px;
     padding: 90px 18px;
     background-color: #F2F2F2;
     width: 100%;
