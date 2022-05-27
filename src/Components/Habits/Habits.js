@@ -6,15 +6,13 @@ import styled from "styled-components";
 
 export default function Habits() {
 
+    const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
     const {userInfo} = useContext(UserContext);
     const [habits, setHabits] = useState([]);
     const [click, setClick] = useState(false);
     const [habitDays, setHabitDays] = useState([]);
     const [habitName, setHabitName] = useState("");
     const [disableButton, setDisableButton] = useState(false);
-
-    const weekDays = [{id: 1, name: "D"}, {id: 2, name: "S"}, {id: 3, name: "T"}, 
-        {id: 4, name: "Q"}, {id: 5, name: "Q"}, {id: 6, name: "S"}, {id: 7, name: "S"}];
 
     useEffect(() => {
         const config = {
@@ -82,7 +80,6 @@ export default function Habits() {
         }
         const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config);
         promise.then(answer => {
-            console.log(answer);
             setHabits(habits.filter(item => item.id !== id));
         }).catch(() => alert("Erro ao deletar o hábito!"));
     }
@@ -93,7 +90,7 @@ export default function Habits() {
                 <Form onSubmit={createHabit}>
                     <Input required disabled={disableButton} type="text" placeholder="nome do hábito" value={habitName} onChange={(e) => setHabitName(e.target.value)}/>
                     <Days>
-                        {weekDays.map(day => <Day disableButton={disableButton} selectedDays={habitDays} selectDay={selectDay} key={day.id} id={day.id} name={day.name} />)}
+                        {weekDays.map((day, index) => <Day disableButton={disableButton} selectedDays={habitDays} selectDay={selectDay} key={index} id={index} name={day} />)}
                     </Days>
                     <Buttons>
                         <h2 onClick={() => setClick(false)}>Cancelar</h2>
@@ -117,7 +114,7 @@ export default function Habits() {
                         <Button onClick={() => setClick(true)}>+</Button>
                     </Header>
                     {newHabitForm()}
-                    {habits.map(item => <UserHabit key={item.id} deleteHabit={deleteHabit} id={item.id} name={item.name} days={item.days} weekDays={weekDays}/>)}
+                    {habits.map(habit => <UserHabit key={habit.id} deleteHabit={deleteHabit} id={habit.id} name={habit.name} days={habit.days} weekDays={weekDays}/>)}
                 </Container>
             );
         }
@@ -147,7 +144,7 @@ function UserHabit({id, name, days, weekDays, deleteHabit}) {
             <ion-icon onClick={() => deleteHabit(id)} name="trash-outline"></ion-icon>
             <h4>{name}</h4>
             <Days>
-                {weekDays.map(day => <DayHabbit selectedDays={days} key={day.id} id={day.id} name={day.name} />)}
+                {weekDays.map((day, index) => <DayHabbit selectedDays={days} key={index} id={index} name={day} />)}
             </Days>
         </HabitsList>
     );
