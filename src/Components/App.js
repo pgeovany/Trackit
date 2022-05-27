@@ -12,10 +12,11 @@ import UserContext from "./contexts/UserContext";
 export default function App() {
 
     const [userInfo, setUserInfo] = useState(null);
+    const [percentage, setPercentage] = useState(0);
 
     return (
         <BrowserRouter>
-            <UserContext.Provider value={{userInfo, setUserInfo}}>
+            <UserContext.Provider value={{userInfo, setUserInfo, percentage, setPercentage}}>
                 <Header />
                 <Routes>
                     <Route path="/" element={<Login />}/>

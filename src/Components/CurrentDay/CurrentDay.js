@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 export default function CurrentDay() {
 
-    const {userInfo} = useContext(UserContext);
+    const {userInfo, setPercentage} = useContext(UserContext);
     const [todayHabits, setTodayHabits] = useState([]);
     const [reload, setReload] = useState(false);
 
@@ -15,10 +15,22 @@ export default function CurrentDay() {
         }
     }
 
+    function calcHabitsDone(habits) {
+        let count = 0;
+        habits.map(habit => {
+            if(habit.done){
+                count++;
+            }
+        });
+        const percentageOfHabitsDone = habits.length === 0 ? 0 : (count/habits.length)*100;
+        setPercentage(percentageOfHabitsDone);
+    }
+
     useEffect(() => {
         const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
         promise.then(answer => {
             setTodayHabits(answer.data);
+            calcHabitsDone(answer.data);
         })
         .catch(answer => console.log(answer.data.message));
     }, [reload]);
@@ -37,6 +49,7 @@ export default function CurrentDay() {
             })
             .catch(() => alert("Erro ao desmarcar o hábito!"));
         }
+        calcHabitsDone(todayHabits);
     }
 
     function genHabitList() {

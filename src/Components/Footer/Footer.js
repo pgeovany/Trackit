@@ -1,14 +1,14 @@
 import { useLocation, Link } from "react-router-dom";
-//import { useContext } from "react";
+import { useContext } from "react";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
-//import UserContext from "../contexts/UserContext";
+import UserContext from "../contexts/UserContext";
 import styled from "styled-components";
 
 export default function Footer() {
 
+    const {percentage} = useContext(UserContext);
     const location = useLocation().pathname;
     const render = location !== "/" && location !== "/cadastro" ? true : false;
-    const percentage = 70;
 
     function  genFooter() {
         if(render) {
