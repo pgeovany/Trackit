@@ -72,8 +72,12 @@ function Habit({name, id, done, currentSequence, highestSequence, toggleHabit}) 
         <HabitBox>
             <div>
                 <h2>{name}</h2>
-                <p>Sequencia atual: {currentSequence} {currentSequence ===0 || currentSequence > 1 ? "dias" : "dia"}</p>
-                <p>Seu recorde: {highestSequence} {highestSequence ===0 || highestSequence > 1 ? "dias" : "dia"}</p>
+                <p>Sequencia atual: 
+                    <DayInfo selected={done}> {currentSequence} {currentSequence ===0 || currentSequence > 1 ? "dias" : "dia"}</DayInfo>
+                </p>
+                <p>Seu recorde: 
+                    <DayInfo selected={(highestSequence) && currentSequence === highestSequence}> {highestSequence} {highestSequence ===0 || highestSequence > 1 ? "dias" : "dia"}</DayInfo>
+                </p>
             </div>
             <CheckButton selected={done} onClick={() => toggleHabit(id, done)}>
                 <ion-icon name="checkmark-sharp"></ion-icon>
@@ -148,4 +152,8 @@ const CheckButton = styled.button`
         color: white;
         font-size: 40px;
     }
+`;
+
+const DayInfo = styled.span`
+    color: ${props => props.selected ? "#8FC549" : "#666666"};
 `;
