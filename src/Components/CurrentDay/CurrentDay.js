@@ -1,4 +1,6 @@
 import { useContext, useEffect, useState } from "react";
+import dayjs from "dayjs";
+import locale from "dayjs/locale/pt-br";
 import axios from "axios";
 import UserContext from "../contexts/UserContext";
 import styled from "styled-components";
@@ -15,17 +17,6 @@ export default function CurrentDay() {
         }
     }
 
-    function calcHabitsDone(habits) {
-        let count = 0;
-        habits.map(habit => {
-            if(habit.done){
-                count++;
-            }
-        });
-        const percentageOfHabitsDone = habits.length === 0 ? 0 : (count/habits.length)*100;
-        setPercentage(percentageOfHabitsDone);
-    }
-
     useEffect(() => {
         const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
         promise.then(answer => {
@@ -34,6 +25,18 @@ export default function CurrentDay() {
         })
         .catch(answer => console.log(answer.data.message));
     }, [reload]);
+
+    function calcHabitsDone(habits) {
+        let count = 0;
+        habits.map(habit => {
+            if(habit.done){
+                count++;
+            }
+            return true;
+        });
+        const percentageOfHabitsDone = habits.length === 0 ? 0 : (count/habits.length)*100;
+        setPercentage(percentageOfHabitsDone);
+    }
 
     function toggleHabit(id, done) {
         if(!done) {
@@ -69,6 +72,21 @@ export default function CurrentDay() {
         );
     }
 
+    function genPageTitle() {
+        const date = `${dayjs().date()}/0${dayjs().month()+1}`;
+        let today = dayjs().locale("pt-br").format("dddd");
+
+        //Removes "-"
+        today = today.includes("-") ? today.slice(0, today.indexOf("-")) : today;
+
+        //Capitalizes the first letter
+        today = today.charAt(0).toUpperCase() + today.slice(1);
+
+        return (
+            <h1>{today}, {date}</h1>
+        );
+    }
+
     function genPageSubtitle() {
         if(percentage !== 0) {
             return (
@@ -84,7 +102,7 @@ export default function CurrentDay() {
     return(
         <>
             <Container>
-                <h1>Dia atual DD/MM</h1>
+                {genPageTitle()}
                 {genPageSubtitle()}
                 {genHabitList()}
             </Container>
@@ -93,6 +111,9 @@ export default function CurrentDay() {
 }
 
 function Habit({name, id, done, currentSequence, highestSequence, toggleHabit}) {
+    
+    const newRecord = (highestSequence) && (currentSequence === highestSequence);
+
     return (
         <HabitBox>
             <div>
@@ -101,7 +122,7 @@ function Habit({name, id, done, currentSequence, highestSequence, toggleHabit}) 
                     <DayInfo selected={done}> {currentSequence} {currentSequence === 0 || currentSequence > 1 ? "dias" : "dia"}</DayInfo>
                 </p>
                 <p>Seu recorde: 
-                    <DayInfo selected={(highestSequence) && currentSequence === highestSequence}> {highestSequence} {highestSequence === 0 || highestSequence > 1 ? "dias" : "dia"}</DayInfo>
+                    <DayInfo selected={newRecord}> {highestSequence} {highestSequence === 0 || highestSequence > 1 ? "dias" : "dia"}</DayInfo>
                 </p>
             </div>
             <CheckButton selected={done} onClick={() => toggleHabit(id, done)}>
