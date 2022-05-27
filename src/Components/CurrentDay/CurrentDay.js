@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 export default function CurrentDay() {
 
-    const {userInfo, setPercentage} = useContext(UserContext);
+    const {userInfo, setPercentage, percentage} = useContext(UserContext);
     const [todayHabits, setTodayHabits] = useState([]);
     const [reload, setReload] = useState(false);
 
@@ -69,11 +69,23 @@ export default function CurrentDay() {
         );
     }
 
+    function genPageSubtitle() {
+        if(percentage !== 0) {
+            return (
+                <h3>{percentage.toFixed()}% dos hábitos concluídos</h3>
+            );
+        } else {
+            return (
+                <p>Nenhum hábito concluído ainda</p>
+            );
+        }
+    }
+
     return(
         <>
             <Container>
                 <h1>Dia atual DD/MM</h1>
-                <p>Nenhum hábito concluído ainda</p>
+                {genPageSubtitle()}
                 {genHabitList()}
             </Container>
         </>
@@ -86,10 +98,10 @@ function Habit({name, id, done, currentSequence, highestSequence, toggleHabit}) 
             <div>
                 <h2>{name}</h2>
                 <p>Sequencia atual: 
-                    <DayInfo selected={done}> {currentSequence} {currentSequence ===0 || currentSequence > 1 ? "dias" : "dia"}</DayInfo>
+                    <DayInfo selected={done}> {currentSequence} {currentSequence === 0 || currentSequence > 1 ? "dias" : "dia"}</DayInfo>
                 </p>
                 <p>Seu recorde: 
-                    <DayInfo selected={(highestSequence) && currentSequence === highestSequence}> {highestSequence} {highestSequence ===0 || highestSequence > 1 ? "dias" : "dia"}</DayInfo>
+                    <DayInfo selected={(highestSequence) && currentSequence === highestSequence}> {highestSequence} {highestSequence === 0 || highestSequence > 1 ? "dias" : "dia"}</DayInfo>
                 </p>
             </div>
             <CheckButton selected={done} onClick={() => toggleHabit(id, done)}>
@@ -104,7 +116,7 @@ const Container = styled.div`
     padding: 30px 18px;
     background-color: #F2F2F2;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
 
@@ -117,6 +129,12 @@ const Container = styled.div`
         margin-top: 6px;
         font-size: 18px;
         color: #BABABA;
+    }
+
+    h3 {
+        margin-top: 6px;
+        font-size: 18px;
+        color: #8FC549;
     }
 `;
 
