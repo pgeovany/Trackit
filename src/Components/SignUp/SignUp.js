@@ -55,14 +55,16 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     background-color: #FFFFFF;
-    margin-top: 70px;
+    padding-top: 70px;
     width: 100%;
+    height:100%;
 
     p, a {
         font-size: 14px;
         color: #52B6FF;
         text-decoration-color: #52B6FF;
         margin-top: 10px;
+        margin-bottom: 30px;
     }
 
     img {

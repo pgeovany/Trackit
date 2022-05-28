@@ -57,6 +57,7 @@ export default createGlobalStyle`
     * {
         box-sizing: border-box;
     }
+
     .root {
         height: 100%;
         background-color: #F2F2F2;

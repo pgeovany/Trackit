@@ -16,7 +16,7 @@ const Container = styled.div`
     margin: 70px 0;
     padding: 30px 16px;
     width: 100%;
-    height: 100%;
+    height: calc(100vh - 140px);
 
     h1 {
         font-size: 22px;

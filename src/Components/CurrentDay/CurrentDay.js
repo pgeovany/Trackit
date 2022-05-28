@@ -135,7 +135,6 @@ function Habit({name, id, done, currentSequence, highestSequence, toggleHabit}) 
 const Container = styled.div`
     margin: 70px 0;
     padding: 30px 18px;
-    background-color: #F2F2F2;
     width: 100%;
     height: 100%;
     display: flex;

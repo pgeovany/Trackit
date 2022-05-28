@@ -197,13 +197,13 @@ const HabitsList = styled.div`
 `;
 
 const Container = styled.div`
-    margin: 70px 0;
-    padding: 30px 18px;
-    background-color: #F2F2F2;
     width: 100%;
     height: 100%;
+    margin: 70px 0;
+    padding: 30px 18px;
     display: flex;
     flex-direction: column;
+    position: relative;
 
     h1 {
         font-size: 22px;
@@ -256,7 +256,6 @@ const Form = styled.form`
 `;
 
 const Input = styled.input`
-    font-family: "Lexend", sans-serif;
     background-color: ${props => props.disabled ? "#F2F2F2" : "#FFFFFF"};
     border: 1px solid #D5D5D5;
     border-radius: 5px;
