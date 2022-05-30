@@ -1,6 +1,6 @@
 import { useLocation, Link } from "react-router-dom";
 import { useContext } from "react";
-import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
+import { CircularProgressbar } from "react-circular-progressbar";
 import UserContext from "../contexts/UserContext";
 import styled from "styled-components";
 
@@ -23,12 +23,21 @@ export default function Footer() {
                             value={percentage}
                             background
                             backgroundPadding={6}
-                            styles={buildStyles({
-                            strokeLinecap: "round",
-                            backgroundColor: "#52B6FF",
-                            textColor: "#fff",
-                            pathColor: "#fff",
-                            trailColor: "transparent"
+                            initialAnimation={true}
+                            styles={({
+                            path: {
+                                stroke: "#FFFFFF",
+                                strokeLinecap: "round",
+                                transition: 'stroke-dashoffset 0.5s ease 0s'
+                            },
+                            trail: {
+                                textColor: "#fff",
+                                pathColor: "#fff",
+                                trailColor: "transparent"
+                            },
+                            background: {
+                                fill: "#52B6FF"
+                            }
                             })}
                         />
                         <h1>Hoje</h1>
