@@ -22,7 +22,7 @@ export default function Header() {
         if(render) {
             return (
                 <Container>
-                    <p>Trackit</p>
+                    <p>TrackIt</p>
                     <div>
                         {userInfo !== null ? <img src={userInfo.image} alt="" /> : null}
                         <ion-icon onClick={() => LogOut()} name="log-out-outline"></ion-icon>
@@ -50,7 +50,7 @@ const Container = styled.div`
     left: 0;
     height: 70px;
     width: 100%;
-    background-color: #126BA5;
+    background-color: var(--dark-blue);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
     display: flex;
     align-items: center;
@@ -58,7 +58,7 @@ const Container = styled.div`
     padding: 0 20px;
 
     p {
-        color: #ffffff;
+        color: white;
         font-size: 38px;
     }
 

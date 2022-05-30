@@ -63,6 +63,9 @@ export default createGlobalStyle`
         height: fit-content;
         background-color: #F2F2F2;
         font-family: "Lexend", sans-serif;
+
+        --dark-blue: #126BA5;
+        --light-blue: #52B6FF;
     }
 
     input {
