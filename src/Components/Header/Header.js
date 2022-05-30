@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import UserContext from "../contexts/UserContext";
 import styled from "styled-components";
@@ -6,15 +6,24 @@ import styled from "styled-components";
 export default function Header() {
 
     const {userInfo} = useContext(UserContext);
+    const navigate = useNavigate();
     const location = useLocation().pathname;
     const render = location !== "/" && location !== "/cadastro" ? true : false;
+
+    function LogOut() {
+        localStorage.removeItem("user");
+        navigate("/");
+    }
 
     function genHeader() {
         if(render) {
             return (
                 <Container>
                     <p>Trackit</p>
-                    {userInfo !== null ? <img src={userInfo.image} alt="" /> : null}
+                    <div>
+                        {userInfo !== null ? <img src={userInfo.image} alt="" /> : null}
+                        <ion-icon onClick={() => LogOut()} name="log-out-outline"></ion-icon>
+                    </div>
                 </Container>
             )
         }
@@ -55,5 +64,18 @@ const Container = styled.div`
         height: 50px;
         width: 50px;
         object-fit: cover;
+    }
+
+    div {
+        margin-right: -10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        ion-icon{
+            padding-left: 6px;
+            font-size: 30px;
+            color: white;
+        }
     }
 `;

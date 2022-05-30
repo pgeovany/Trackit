@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
 import UserContext from "../contexts/UserContext";
@@ -14,6 +14,15 @@ export default function Login() {
     const {userInfo, setUserInfo} = useContext(UserContext);
     const navigate = useNavigate();
 
+    useEffect(() =>{
+        if(localStorage.getItem("user") !== null) {
+            const serializedData = localStorage.getItem("user");
+            const data = JSON.parse(serializedData);
+            setUserInfo({...data});
+            navigate("/hoje");
+        }
+    }, [])
+
     function logUser(e) {
         e.preventDefault();
         setDisableButton(true);
@@ -24,6 +33,7 @@ export default function Login() {
         const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body);
         request.then(answer => {
             setUserInfo(answer.data);
+            localStorage.setItem("user", JSON.stringify(answer.data));
             navigate("/hoje");
         })
         request.catch(({response}) => {
