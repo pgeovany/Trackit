@@ -152,10 +152,18 @@ const CheckBox = styled.button`
     border-radius: 5px;
     text-align: center;
     margin-right: 6px;
+
+    &:hover{
+        cursor: pointer;
+    }
 `;
 
 const FormButtons = styled.div`
     justify-content: flex-end;
     display: flex;
     align-items: center;
+
+    h2 {
+        cursor: pointer;
+    }
 `;

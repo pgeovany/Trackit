@@ -11,6 +11,9 @@ export default function Header() {
     const render = location !== "/" && location !== "/cadastro" ? true : false;
 
     function LogOut() {
+        if(!window.confirm("Você realmente deseja sair do aplicativo?")){
+            return;
+        }
         localStorage.removeItem("user");
         navigate("/");
     }

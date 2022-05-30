@@ -203,6 +203,9 @@ const CheckButton = styled.button`
         color: white;
         font-size: 40px;
     }
+    &:hover {
+        cursor: pointer;
+    }
 `;
 
 const DayInfo = styled.span`

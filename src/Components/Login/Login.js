@@ -11,6 +11,7 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [disableButton, setDisableButton] = useState(false);
+    const [persistentLogin, setPersistentLogin] = useState(false);
     const {userInfo, setUserInfo} = useContext(UserContext);
     const navigate = useNavigate();
 
@@ -33,7 +34,9 @@ export default function Login() {
         const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body);
         request.then(answer => {
             setUserInfo(answer.data);
-            localStorage.setItem("user", JSON.stringify(answer.data));
+            if(persistentLogin) {
+                localStorage.setItem("user", JSON.stringify(answer.data));
+            }
             navigate("/hoje");
         })
         request.catch(({response}) => {
@@ -51,6 +54,10 @@ export default function Login() {
                 <Button type="submit" disabled={disableButton}>
                     {disableButton ? <ThreeDots color="white"/> : "Entrar"}
                 </Button>
+                <label htmlFor="checkbox">
+                    <input onChange={(e) => setPersistentLogin(e.target.checked)} type="checkbox" id="checkbox"/>
+                    <h2>Mantenha-me conectado</h2>
+                </label>
             </form>
             <Link to="/cadastro">
                 <p>Não tem uma conta? Cadastre-se!</p>
@@ -83,6 +90,15 @@ const Container = styled.div`
         width: 80%;
         display: flex;
         flex-direction: column;
+    }
+
+    label {
+        margin-top: 6px;
+        display: flex;
+        
+        h2 {
+            padding-left: 4px;
+        }
     }
 `;
 

@@ -71,4 +71,8 @@ export default createGlobalStyle`
     button {
         font-family: "Lexend", sans-serif;
     }
+    
+    ion-icon:hover{
+        cursor: pointer;
+    }
 `;
