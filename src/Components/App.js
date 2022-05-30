@@ -11,8 +11,15 @@ import UserContext from "./contexts/UserContext";
 
 export default function App() {
 
-    const [userInfo, setUserInfo] = useState(null);
     const [percentage, setPercentage] = useState(0);
+    const [userInfo, setUserInfo] = useState(() => {
+        if(localStorage.getItem("user") !== null) {
+            const serializedData = localStorage.getItem("user");
+            const data = JSON.parse(serializedData);
+            return data;
+        }
+        return [];
+    });
 
     return (
         <BrowserRouter>

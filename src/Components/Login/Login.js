@@ -22,7 +22,7 @@ export default function Login() {
             setUserInfo({...data});
             navigate("/hoje");
         }
-    }, [])
+    }, []);
 
     function logUser(e) {
         e.preventDefault();
