@@ -57,7 +57,7 @@ const Container = styled.div`
     background-color: #FFFFFF;
     padding-top: 70px;
     width: 100%;
-    height:100%;
+    min-height: 100vh;
 
     p, a {
         font-size: 14px;

@@ -119,7 +119,7 @@ const HabitContainer = styled.div`
     h4 {
         font-size: 20px;
         color: #666666;
-        margin-bottom: 8px;
+        padding-bottom: 8px;
     }
 
     ion-icon {
@@ -132,7 +132,8 @@ const HabitContainer = styled.div`
 
 const Container = styled.div`
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
+    height: fit-content;
     margin: 70px 0;
     padding: 30px 18px;
     display: flex;

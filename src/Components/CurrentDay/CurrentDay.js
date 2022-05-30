@@ -136,7 +136,8 @@ const Container = styled.div`
     margin: 70px 0;
     padding: 30px 18px;
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
+    height: fit-content;
     display: flex;
     flex-direction: column;
 
@@ -146,13 +147,13 @@ const Container = styled.div`
     }
 
     p {
-        margin-top: 6px;
+        padding-top: 6px;
         font-size: 18px;
         color: #BABABA;
     }
 
     h3 {
-        margin-top: 6px;
+        padding-top: 6px;
         font-size: 18px;
         color: #8FC549;
     }

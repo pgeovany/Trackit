@@ -59,7 +59,8 @@ export default createGlobalStyle`
     }
 
     .root {
-        height: 100%;
+        min-height: 100vh;
+        height: fit-content;
         background-color: #F2F2F2;
         font-family: "Lexend", sans-serif;
     }
